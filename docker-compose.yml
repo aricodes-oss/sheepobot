@@ -10,5 +10,3 @@ services:
       - /code/lib
   db:
     image: mongo
-    volumes:
-      - /data/db

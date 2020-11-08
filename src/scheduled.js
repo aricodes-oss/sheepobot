@@ -41,8 +41,8 @@ const notifyStreams = client => async () => {
   }
 
   for (const stream of notifyAbout) {
-    try {
-      const message = await newsChannel.send(
+    newsChannel
+      .send(
         new MessageEmbed()
           .setColor(EMBED_COLOR)
           .setTitle(stream.user_name)
@@ -50,12 +50,12 @@ const notifyStreams = client => async () => {
           .setThumbnail(stream.thumbnail_url.replace('{width}', '72').replace('{height}', '72'))
           .setDescription(stream.title)
           .setTimestamp(),
-      );
-      await streams.insertOne({ userName: stream.user_name, messageId: message.id });
-    } catch (err) {
-      console.log(`Error notifying about ${stream.user_name}`);
-      console.log(err);
-    }
+      )
+      .then(message => streams.insertOne({ userName: stream.user_name, messageId: message.id }))
+      .catch(err => {
+        console.log(`Error notifying about ${stream.user_name}`);
+        console.log(err);
+      });
   }
 };
 

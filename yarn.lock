@@ -3647,6 +3647,11 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
+shlex@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/shlex/-/shlex-2.0.2.tgz#debf51a145f1df9e7cb7cce04340ccb45120092d"
+  integrity sha512-i4p9nNXgBTILspHwZlBCNsZzwuVWW8SFx5dyIONrjL0R+AbMOPbg7ndqgGfjYivkYRTtZMKqIT8HT+QyOhPQWA==
+
 signal-exit@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
@@ -4109,6 +4114,13 @@ which@^2.0.1:
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
+
+whisparse@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/whisparse/-/whisparse-1.0.0.tgz#e2410ff003d697a25e0d79d54cc409bc9149f15e"
+  integrity sha512-qCRTeFCvs39slhMFDq1M8z6M0XKwJw5LLAeIiPjcs/rH/Vuhxqn/sQ0wJ8Ed2rAf7d7krTSu6sTMJ/VY4zuD4Q==
+  dependencies:
+    shlex "^2.0.2"
 
 widest-line@^3.1.0:
   version "3.1.0"

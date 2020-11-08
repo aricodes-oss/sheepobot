@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = {
   parser: 'babel-eslint',
@@ -7,14 +7,20 @@ module.exports = {
   rules: {
     // for loops should not be restricted
     'no-restricted-syntax': ['off'],
+
     // this is a NodeJS app
-    'no-console': ['off']
+    'no-console': ['off'],
+
+    // we use mongo
+    'no-underscore-dangle': ['off'],
+
+    'no-await-in-loop': ['off'],
   },
   settings: {
     'import/resolver': {
       node: {
-        paths: './src'
-      }
-    }
-  }
+        paths: './src',
+      },
+    },
+  },
 };
