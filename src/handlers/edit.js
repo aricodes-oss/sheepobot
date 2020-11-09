@@ -1,16 +1,10 @@
 import { getCollection, findCommand } from 'db';
 import { PermissionsLevel } from 'enums';
 
-const editCommand = async ({ say, args }) => {
-  if (args.length > 2) {
-    await say('editcommand only takes 2 arguments');
-    await say('Syntax: !editcommand <commandName> <output>');
-    return;
-  }
-
+const editCommand = async ({ say, args, argsString }) => {
   const commands = await getCollection('commands');
   let [name] = args;
-  const output = args[1];
+  const output = argsString.replace(`${name} `, '');
 
   if (name.startsWith('!')) {
     name = name.slice(1);
