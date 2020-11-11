@@ -18,7 +18,7 @@ const addCommand = async ({ say, args, argsString }) => {
   }
 
   await commands.insertOne({
-    _id: name,
+    _id: name.toLowerCase(),
     output,
     aliases: [],
     permissionsLevel: PermissionsLevel.USER,
