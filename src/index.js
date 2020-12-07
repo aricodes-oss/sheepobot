@@ -21,7 +21,7 @@ const countSheepo = async message => {
   if (message.content.toLowerCase().includes('sheepo')) {
     const count = await getNextSequence('sheepo');
 
-    if (count % 100 == 0) {
+    if (count % 100 === 0) {
       message.channel.send(`We have now said Sheepo ${count} times!`);
     }
   }
