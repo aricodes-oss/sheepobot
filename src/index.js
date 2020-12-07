@@ -5,7 +5,7 @@ import { Client as DiscordClient } from 'discord.js';
 import whisparse from 'whisparse';
 
 import notifyNewStreams from 'scheduled';
-import { getCollection } from 'db';
+import { getCollection, getNextSequence } from 'db';
 import { wrapHandlerFunc, getPermissionsLevel } from 'utils';
 
 import handlers from 'handlers';
@@ -17,12 +17,24 @@ client.on('ready', () => {
   console.log('Ret-2-go!');
 });
 
+const countSheepo = async message => {
+  if (message.content.toLowerCase().includes('sheepo')) {
+    const count = await getNextSequence('sheepo');
+
+    if (count % 100 == 0) {
+      message.channel.send(`We have now said Sheepo ${count} times!`);
+    }
+  }
+};
+
 client.on('message', async message => {
   if (message.author.bot) {
     return;
   }
 
   const parsed = whisparse(message.content);
+
+  countSheepo(message);
 
   if (!parsed) {
     return;
