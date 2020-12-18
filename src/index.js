@@ -34,7 +34,7 @@ client.on('message', async message => {
 
   const parsed = whisparse(message.content);
 
-  countSheepo(message);
+  await countSheepo(message);
 
   if (!parsed) {
     return;
