@@ -20,9 +20,14 @@ client.on('ready', () => {
 const countSheepo = async message => {
   if (message.content.toLowerCase().includes('sheepo')) {
     const count = await getNextSequence('sheepo');
+    const prelude = `We have now said Sheepo ${count} times!`;
+
+    if (count === 420) {
+      message.channel.send(`${prelude} *Nice.*`);
+    }
 
     if (count % 100 === 0) {
-      message.channel.send(`We have now said Sheepo ${count} times!`);
+      message.channel.send(prelude);
     }
   }
 };

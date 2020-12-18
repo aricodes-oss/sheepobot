@@ -4,5 +4,6 @@ import alias from './alias';
 import remove from './remove';
 import permissions from './permissions';
 import edit from './edit';
+import count from './count';
 
-export default [add, alias, remove, permissions, edit].map(wrapHandlerFunc);
+export default [add, alias, remove, permissions, edit, count].map(wrapHandlerFunc);
