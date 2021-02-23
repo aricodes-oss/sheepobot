@@ -29,15 +29,17 @@ const notifyStreams = client => async () => {
 
   const newsChannel = await await client.channels.fetch(NEWS_CHANNEL_ID);
 
-  try {
-    for (const stream of deleteStreams) {
+  for (const stream of deleteStreams) {
+    try {
       const message = await newsChannel.messages.fetch(stream.messageId, false);
       message.delete();
       await streams.deleteMany(stream);
+    } catch (err) {
+      console.log('Error deleting messages');
+      console.log(err);
+
+      await streams.deleteMany(stream);
     }
-  } catch (err) {
-    console.log('Error deleting messages');
-    console.log(err);
   }
 
   for (const stream of notifyAbout) {

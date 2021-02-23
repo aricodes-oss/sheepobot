@@ -5,7 +5,7 @@ import { Client as DiscordClient } from 'discord.js';
 import whisparse from 'whisparse';
 
 import notifyNewStreams from 'scheduled';
-import { getCollection, getNextSequence } from 'db';
+import { getCollection, getNextSequence, findCommand } from 'db';
 import { wrapHandlerFunc, getPermissionsLevel } from 'utils';
 
 import handlers from 'handlers';
@@ -45,19 +45,16 @@ client.on('message', async message => {
     return;
   }
 
-  const commands = await getCollection('commands');
-  let dbCommands = await commands.find({}).toArray();
-
-  dbCommands = dbCommands.map(d => {
-    const result = ({ say }) => say(d.output);
-    Object.assign(result, d, { command: d._id });
-    return wrapHandlerFunc(result);
-  });
+  const dbCommand = await findCommand(parsed.command);
+  const dbHandler = ({ say }) => dbCommand && say(pupa(dbCommand.output, context));
+  if (dbCommand) {
+    Object.assign(dbHandler, dbCommand);
+  }
 
   // eslint-disable-next-line no-param-reassign
   message.permissionsLevel = getPermissionsLevel(message);
 
-  for (const handler of handlers.concat(dbCommands)) {
+  for (const handler of handlers.concat([wrapHandlerFunc(dbHandler)])) {
     handler({
       ...parsed,
       message,
