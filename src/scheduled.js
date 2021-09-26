@@ -48,7 +48,7 @@ const notifyStreams = client => async () => {
         new MessageEmbed()
           .setColor(EMBED_COLOR)
           .setTitle(stream.user_name)
-          .setURL(`https://twitch.tv/${stream.user_name}`)
+          .setURL(`https://twitch.tv/${stream.user_login}`)
           .setThumbnail(stream.thumbnail_url.replace('{width}', '72').replace('{height}', '72'))
           .setDescription(stream.title)
           .setTimestamp(),
