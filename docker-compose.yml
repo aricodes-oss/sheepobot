@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile.local
     volumes:
       - .:/code
+      - ./db:/db
       - /code/node_modules
       - /code/lib
   db:

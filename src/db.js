@@ -1,25 +1,29 @@
-import { MongoClient } from 'mongodb';
+import Datastore from 'nedb-promises';
+import path from 'path';
 
-const db = (async () => {
-  const client = new MongoClient('mongodb://db:27017/sheepobot', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+export const collections = ['sequences', 'timestamps', 'commands'];
+const basePath = '/db';
+const db = {};
 
-  await client.connect();
+const initCollection = async collection => {
+  if (db[collection]) {
+    return db[collection];
+  }
 
-  return client.db('sheepobot');
-})();
+  db[collection] = Datastore.create(path.join(basePath, `${collection}.db`));
+  db[collection].persistence.setAutocompactionInterval(1);
+  await db[collection].load();
 
-export const getCollection = async collName => {
-  const dbInterface = await db;
-
-  return dbInterface.collection(collName);
+  return db[collection];
 };
 
+const initCollections = () => Promise.allSettled(collections.map(c => initCollection(c)));
+initCollections();
+
+export const getCollection = c => initCollection(c);
+
 export const getNextSequence = async collName => {
-  const dbInterface = await db;
-  const sequences = dbInterface.collection('sequences');
+  const sequences = await getCollection('sequences');
 
   await sequences.findOneAndUpdate(
     { _id: collName },
@@ -33,8 +37,7 @@ export const getNextSequence = async collName => {
 };
 
 export const setLastTimestamp = async collName => {
-  const dbInterface = await db;
-  const timestamps = dbInterface.collection('timestamps');
+  const timestamps = await getCollection('timestamps');
 
   await timestamps.findOneAndUpdate(
     { _id: collName },
@@ -48,8 +51,7 @@ export const setLastTimestamp = async collName => {
 };
 
 export const getLastTimestamp = async collName => {
-  const dbInterface = await db;
-  const timestamps = dbInterface.collection('timestamps');
+  const timestamps = await getCollection('timestamps');
 
   const newDoc = (await timestamps.findOne({ _id: collName })) || { last: 0 };
 
@@ -57,8 +59,7 @@ export const getLastTimestamp = async collName => {
 };
 
 export const findCommand = async name => {
-  const dbInterface = await db;
-  const commands = await dbInterface.collection('commands');
+  const commands = await getCollection('commands');
 
   const queryName = name.startsWith('!') ? name.slice(1).toLowerCase() : name.toLowerCase();
 

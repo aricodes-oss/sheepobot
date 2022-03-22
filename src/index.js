@@ -4,7 +4,6 @@ import every from 'every.js';
 import { Client as DiscordClient } from 'discord.js';
 import whisparse from 'whisparse';
 
-import notifyNewStreams from 'scheduled';
 import { getCollection, getNextSequence, findCommand } from 'db';
 import { wrapHandlerFunc, getPermissionsLevel } from 'utils';
 
@@ -64,10 +63,6 @@ client.on('message', async message => {
       reply: msg => message.reply(msg),
     });
   }
-});
-
-every(`${checkInterval} seconds`, () => {
-  notifyNewStreams(client)().catch(console.log);
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
