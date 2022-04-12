@@ -25,7 +25,7 @@ export const getCollection = c => initCollection(c);
 export const getNextSequence = async collName => {
   const sequences = await getCollection('sequences');
 
-  await sequences.findOneAndUpdate(
+  await sequences.update(
     { _id: collName },
     { $set: { _id: collName }, $inc: { current: 1 } },
     { upsert: true },
@@ -39,7 +39,7 @@ export const getNextSequence = async collName => {
 export const setLastTimestamp = async collName => {
   const timestamps = await getCollection('timestamps');
 
-  await timestamps.findOneAndUpdate(
+  await timestamps.update(
     { _id: collName },
     { $set: { _id: collName, last: Date.now() } },
     { upsert: true },
