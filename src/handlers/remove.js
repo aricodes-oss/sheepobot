@@ -22,7 +22,7 @@ const delCommand = async ({ say, args, argsString }) => {
     return;
   }
 
-  await commands.deleteOne({
+  await commands.remove({
     _id: existing._id,
   });
   await say(`Successfully deleted command ${name}`);

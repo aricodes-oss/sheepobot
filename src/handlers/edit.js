@@ -17,7 +17,7 @@ const editCommand = async ({ say, args, argsString }) => {
     return;
   }
 
-  await commands.updateOne(existing, { $set: { output } });
+  await commands.update(existing, { $set: { output } });
   await say(`Successfully edited command ${name}`);
 };
 

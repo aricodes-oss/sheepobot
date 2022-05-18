@@ -16,7 +16,7 @@ const setPermissions = async ({ args, say }) => {
     await say('Invalid choice!');
   }
 
-  await commands.updateOne({ _id: existing._id }, { $set: { permissionsLevel: Number(level) } });
+  await commands.update({ _id: existing._id }, { $set: { permissionsLevel: Number(level) } });
   await say('Updated permissions level!');
 };
 

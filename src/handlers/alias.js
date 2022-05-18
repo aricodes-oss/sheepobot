@@ -22,7 +22,7 @@ const addAlias = async ({ say, args }) => {
     return;
   }
 
-  await commands.updateOne(
+  await commands.update(
     { _id: existing._id },
     { $addToSet: { aliases: { $each: aliases.map(a => a.toLowerCase()) } } },
   );
